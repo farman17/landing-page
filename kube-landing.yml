@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: landing-service
+  namespace: production
 spec:
   ports:
   - port: 80
@@ -14,6 +15,7 @@ apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
   name: landing-deployment
+  namespace: production
 spec:
   selector:
     matchLabels:
@@ -26,7 +28,7 @@ spec:
     spec:
       containers:
       - name: landing
-        image: elqahtani/landing-page
+        image: farman17/dekkeng-landing
         ports:
         - containerPort: 80
         imagePullPolicy: "Always"
@@ -36,11 +38,12 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: landing-ingress
+  namespace: production
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: serverfarms.dailybugis.my.id
+  - host: landing.dekkeng.online
     http:
       paths:
       #- path: /
